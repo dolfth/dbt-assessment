@@ -1,0 +1,60 @@
+version: 2
+
+sources:
+  - name: fashionable
+    database: dev
+    schema: raw
+    tables:
+      - name: sales
+
+models:
+
+  - name: dim_dates
+    description: Dimensional table containing date attributes.
+    columns:
+      - name: date_key
+        data_type: integer
+        description: Unique identifier that corresponds to a single date.
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_fulfillments
+    description: Dimensional table containing details around the fulfillment of the customer order.
+    columns:
+      - name: fulfillment_key
+        data_type: integer
+        description: Unique identifier that corresponds to a single fulfillment.
+        tests:
+          - unique
+          - not_null
+          
+  - name: dim_location
+    description: Dimensional table containing details on location the customer order is shipped to.
+    columns:
+      - name: location_key
+        data_type: integer
+        description: Unique identifier that corresponds to a single location.
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_orders
+    description: Dimensional table containing details on the order the customer placed.
+    columns:
+      - name: order_id
+        data_type: integer
+        description: Unique identifier that corresponds to a single order the customer placed.
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_products
+    description: Dimensional table containing details on the product the customer ordered.
+    columns:
+      - name: product_key
+        data_type: integer
+        description: Unique identifier that corresponds to a single product.
+        tests:
+          - unique
+          - not_null

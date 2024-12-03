@@ -1,11 +1,13 @@
 /*
     Clean up the raw data for further processing
     1. Reformat column names to snake cased for consistency and ease-of-use
-    2. Drop index column as it seems not to be an ID
+    2. Rename column names for dimensional tables
+    3. Drop index column as it seems not to be an ID
     3. Drop undefined column "Unnamed: 22"
     4. Remove nulls
     5. Parse postal code to Indian 6-digit format
     6. Remove duplicates (7 rows with order/asin duplicated)
+    7. Correct typo in 'Fulfilment'
 
 
 */
@@ -23,7 +25,7 @@ cleaned_sales as (
         "Order ID" as order_id,
         date as order_date,
         status as status,
-        fulfilment as fulfillment,
+        fulfilment as fulfillment_provider,
         "Sales Channel" as sales_channel,
         style as style,
         sku as sku,
@@ -35,12 +37,12 @@ cleaned_sales as (
         coalesce("Courier Status", '<unknown>') as courier_status,
         coalesce(currency, '<unknown>') as currency,
         coalesce(amount, 0) as amount,
-        coalesce("ship-service-level") as ship_service_level,
-        coalesce("ship-city", '<unknown>') as ship_city,
-        coalesce("ship-state", '<unknown>') as ship_state,
+        coalesce("ship-service-level") as shipment_service_level,
+        coalesce("ship-city", '<unknown>') as city,
+        coalesce("ship-state", '<unknown>') as state,
         coalesce(("ship-postal-code"::VARCHAR)[:6], '<unknown>')
-        as ship_postal_code,
-        coalesce("ship-country", '<unknown>') as ship_country,
+        as postal_code,
+        coalesce("ship-country", '<unknown>') as country,
         coalesce("promotion-ids", '<unknown>') as promotion_ids,
         coalesce("fulfilled-by", '<unknown>') as fulfilled_by,
         count(*) as cnt
