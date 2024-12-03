@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: fashionable
+    database: dev
+    schema: raw
+    tables:
+      - name: sales
